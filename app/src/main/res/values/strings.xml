@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Factionary</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">FACTionary</string>
+    <string name="nav_header_subtitle">Explore the Universe with us</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_share">Share</string>
+
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

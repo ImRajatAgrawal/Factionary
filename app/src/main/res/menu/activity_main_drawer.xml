@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_house"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_sciencefacts"
+            android:icon="@drawable/ic_tree"
+            android:title="Science Facts" />
+        <item
+            android:id="@+id/nav_technologyfacts"
+            android:icon="@drawable/ic_computer"
+            android:title="Technology Facts" />
+
+        <item
+            android:id="@+id/nav_spacefacts"
+            android:icon="@drawable/ic_rocket"
+            android:title="Space Facts" />
+
+        <item
+            android:id="@+id/nav_sportsfacts"
+            android:icon="@drawable/ic_cricket"
+            android:title="Sports Facts" />
+
+
+        <item
+            android:id="@+id/nav_randomfacts"
+            android:icon="@drawable/ic_river"
+            android:title="Random Facts" />
+
+        <item
+            android:id="@+id/nav_bookmarks"
+            android:icon="@drawable/ic_bookmark_border"
+            android:title="Bookmarks" />
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
