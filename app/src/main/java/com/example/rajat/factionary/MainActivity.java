@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
             flipimages(image);
         }
 
-        insertfacts();
+        //insertfacts();
     }
     void flipimages(int image){
         ImageView iv=new ImageView(this);
@@ -150,8 +150,6 @@ public class MainActivity extends AppCompatActivity
                 i.putExtra("fact","science");
                 startActivity(i);
 
-        } else if (id == R.id.nav_bookmarks) {
-
         } else if (id == R.id.nav_spacefacts) {
 
             i.putExtra("fact","space");
@@ -172,6 +170,10 @@ public class MainActivity extends AppCompatActivity
             i.putExtra("fact","sports");
             startActivity(i);
 
+        }
+        else if(id==R.id.nav_bookmarks){
+            Intent bookmarkIntent=new Intent(this,BookmarkActivity.class);
+            startActivity(bookmarkIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

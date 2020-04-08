@@ -1,34 +1,20 @@
 package com.example.rajat.factionary;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Handler;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.UtteranceProgressListener;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.recyclerview.extensions.ListAdapter;
-import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Locale;
 
 
 public class MyListView extends ArrayAdapter {
@@ -55,25 +41,31 @@ public class MyListView extends ArrayAdapter {
     public View getView(final int position, View view, ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
         View rowView=inflater.inflate(R.layout.customlistview, null,true);
-        Log.i("Id of parent",parent.getAccessibilityClassName()+"");
-         TextView titleText = rowView.findViewById(R.id.facttextview);
-        ImageButton sharebutton=rowView.findViewById(R.id.sharebutton);
-        ImageButton bookmarkbutton=rowView.findViewById(R.id.bookmark);
+       // Log.i("Id of parent",parent.getAccessibilityClassName()+"");
+         final TextView titleText = rowView.findViewById(R.id.facttextview);
+        final ImageButton sharebutton=rowView.findViewById(R.id.sharebutton);
+        final ImageButton bookmarkbutton=rowView.findViewById(R.id.bookmark);
         fcts=factlist.get(position).split("::");
         fact_id=Integer.parseInt(fcts[0]);
         fact_contents=fcts[1];
+        bookmarkbutton.setTag(fact_id);
+        titleText.setTag(fact_contents);
+        sharebutton.setTag(fact_contents);
+        //Log.i("fact contents",fact_id+fact_contents);
         bookmarkbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int tag_of_my_bookmark=Integer.parseInt(bookmarkbutton.getTag().toString());
+              //  Log.i("tag of my bookmark",tag_of_my_bookmark+"");
                 adp.open();
-                Cursor cr=adp.getbookmarkids(fact_id);
+                Cursor cr=adp.getbookmarkids(tag_of_my_bookmark);
                 if(cr.getCount()==0) {
-                    long id = adp.addbookmark(fact_id);
-                    Log.i("Bookmarks added", id + "");
-
+                    long id = adp.addbookmark(tag_of_my_bookmark);
+                    Toast.makeText(context.getApplicationContext(),"Bookmark Succesfully added",Toast.LENGTH_SHORT).show();
+                //    Log.i("Bookmarks added", id + "");
                 }
                 else{
-                    Toast.makeText(context,"Bookmark already added",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(),"Bookmark already added",Toast.LENGTH_SHORT).show();
                 }
                 adp.close();
             }
@@ -87,7 +79,7 @@ public class MyListView extends ArrayAdapter {
                     if(playpause){
                         playpause=false;
                         ib.setImageResource(R.drawable.ic_symbol);
-                        converttexttospeech(fact_contents);
+                        converttexttospeech(titleText.getTag().toString());
 
                     }
                     else{
@@ -100,13 +92,13 @@ public class MyListView extends ArrayAdapter {
 
             });
 
-        titleText.setText(factlist.get(position));
+        titleText.setText(fact_contents);
         sharebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(Intent.ACTION_SEND);
                 myIntent.setType("text/plain");
-                String shareBody = "*shared from FACTionary app*\n"+fact_contents;
+                String shareBody = "*shared from FACTionary app*\n"+sharebutton.getTag().toString();
                 String shareSub = "Facts";
                 myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
                 myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);

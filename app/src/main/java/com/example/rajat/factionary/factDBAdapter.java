@@ -104,6 +104,21 @@ public class factDBAdapter {
         return mCursor;
 
     }
+    public Cursor getfactfrombookmarks() throws SQLException{
+
+        Cursor mCursor = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" where "+FACT_ID+" in( SELECT "+FACT_ID+" FROM "+DATABASE_TABLE_BOOKMARKS+");",null);
+        if (mCursor != null) {
+
+            mCursor.moveToFirst();
+
+        }
+
+        return mCursor;
+
+    }
+    public long deletebookmark(int id){
+         return db.delete(DATABASE_TABLE_BOOKMARKS,"_id ="+id,null);
+    }
 
     public Cursor getfactsbycategory(String category) throws SQLException
 

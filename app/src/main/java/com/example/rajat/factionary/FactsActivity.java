@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -108,6 +109,7 @@ public class FactsActivity extends AppCompatActivity {
 
         titleoffact=findViewById(R.id.titleoffact);
         factview=findViewById(R.id.factsview);
+        //factview.setFriction(ViewConfiguration.getScrollFriction()*10);
         factimage=findViewById(R.id.imageViewFact);
         backbutton=findViewById(R.id.backbutton);
 
