@@ -3,6 +3,7 @@ package com.example.rajat.factionary;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
@@ -23,8 +24,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Locale;
 
 
@@ -59,6 +62,22 @@ public class MyListView extends ArrayAdapter {
         fcts=factlist.get(position).split("::");
         fact_id=Integer.parseInt(fcts[0]);
         fact_contents=fcts[1];
+        bookmarkbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adp.open();
+                Cursor cr=adp.getbookmarkids(fact_id);
+                if(cr.getCount()==0) {
+                    long id = adp.addbookmark(fact_id);
+                    Log.i("Bookmarks added", id + "");
+
+                }
+                else{
+                    Toast.makeText(context,"Bookmark already added",Toast.LENGTH_SHORT).show();
+                }
+                adp.close();
+            }
+        });
         playpause=true;
          playbutton = rowView.findViewById(R.id.playbutton);
             playbutton.setOnClickListener(new View.OnClickListener() {
