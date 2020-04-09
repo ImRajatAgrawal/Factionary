@@ -10,6 +10,11 @@
             android:icon="@drawable/ic_house"
             android:title="Home" />
         <item
+            android:id="@+id/nav_suggest"
+            android:icon="@drawable/ic_suggest"
+            android:title="Suggest Facts"
+            />
+        <item
             android:id="@+id/nav_sciencefacts"
             android:icon="@drawable/ic_tree"
             android:title="Science Facts" />

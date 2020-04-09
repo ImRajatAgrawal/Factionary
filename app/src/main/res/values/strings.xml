@@ -5,7 +5,7 @@
     <string name="nav_header_title">FACTionary</string>
     <string name="nav_header_subtitle">Explore the Universe with us</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_share">Share</string>
+    <string name="action_settings">Settings</string>
 
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="dummy_button">Dummy Button</string>

@@ -1,5 +1,7 @@
 package com.example.rajat.factionary;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -20,6 +22,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import java.io.BufferedInputStream;
@@ -32,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity
             flipimages(image);
         }
 
-        //insertfacts();
+       //insertfacts();
     }
     void flipimages(int image){
         ImageView iv=new ImageView(this);
@@ -180,4 +184,37 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+        @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.enableNotification) {
+            Toast.makeText(this,"Notification generated ",Toast.LENGTH_SHORT).show();
+            Calendar cd=Calendar.getInstance();
+            cd.set(Calendar.HOUR_OF_DAY,18);
+            cd.set(Calendar.MINUTE,12);
+            cd.set(Calendar.SECOND,0);
+            Intent intent=new Intent(getApplicationContext(),notificationReciever.class);
+            PendingIntent pi=PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager am= (AlarmManager) getSystemService(ALARM_SERVICE);
+            am.setRepeating(AlarmManager.RTC_WAKEUP,cd.getTimeInMillis(),AlarmManager.INTERVAL_FIFTEEN_MINUTES,pi);
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

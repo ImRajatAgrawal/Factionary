@@ -27,7 +27,7 @@ public class splashscreen extends AppCompatActivity {
         rl=findViewById(R.id.splashlayout);
         int[] androidColors = getResources().getIntArray(R.array.androidcolors);
         int randomAndroidColor = androidColors[new Random().nextInt(androidColors.length)];
-        Log.i("color is",""+randomAndroidColor);
+        //Log.i("color is",""+randomAndroidColor);
         rl.setBackgroundColor(randomAndroidColor);
         new Handler().postDelayed(new Runnable() {
             @Override
