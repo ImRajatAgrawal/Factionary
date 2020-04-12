@@ -106,13 +106,7 @@ public class factDBAdapter {
     }
     public Cursor getfactfrombookmarks() throws SQLException{
 
-        Cursor mCursor = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" where "+FACT_ID+" in( SELECT "+FACT_ID+" FROM "+DATABASE_TABLE_BOOKMARKS+");",null);
-        if (mCursor != null) {
-
-            mCursor.moveToFirst();
-
-        }
-
+        Cursor mCursor = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" where "+FACT_ID+" in( SELECT _id"+" FROM "+DATABASE_TABLE_BOOKMARKS+");",null);
         return mCursor;
 
     }

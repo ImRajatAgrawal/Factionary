@@ -3,12 +3,18 @@ package com.example.rajat.factionary;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,7 +27,9 @@ import android.view.MenuItem;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -43,6 +51,22 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     ViewFlipper viewFlipper;
+    void populaterecyclerview(){
+        RecyclerView rv=findViewById(R.id.recyclerview);
+        MyRecyclerListData listData[]={
+                new MyRecyclerListData("space", R.drawable.astronaut),
+                new MyRecyclerListData("sports", R.drawable.sports),
+                new MyRecyclerListData("technology", R.drawable.technology)};
+        MyRecyclerListAdapter adapter=new MyRecyclerListAdapter(listData,this);
+        rv.setAdapter(adapter);
+        rv.setItemViewCacheSize(20);
+        rv.setDrawingCacheEnabled(true);
+        rv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setHasFixedSize(true);
+
+
+    }
     void addfactstodb(String filename,String category,factDBAdapter adp){
         adp.open();
         InputStream is= null;   //reads the file
@@ -112,12 +136,26 @@ public class MainActivity extends AppCompatActivity
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
         viewFlipper=findViewById(R.id.viewflipper);
+        populaterecyclerview();
         int images[]={R.drawable.carosoul1,R.drawable.carosuel2,R.drawable.caroseul3,R.drawable.carosouel4};
         for (int image:images) {
             flipimages(image);
         }
 
-       //insertfacts();
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
+        if(!sp.getBoolean("firstRun", false)) {
+            // run your one time code
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    insertfacts();
+                }
+            });
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean("firstRun", true);
+            editor.apply();
+        }
+
     }
     void flipimages(int image){
         ImageView iv=new ImageView(this);
@@ -201,10 +239,10 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.enableNotification) {
-            Toast.makeText(this,"Notification generated ",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Notifications enabled Successfully",Toast.LENGTH_SHORT).show();
             Calendar cd=Calendar.getInstance();
-            cd.set(Calendar.HOUR_OF_DAY,18);
-            cd.set(Calendar.MINUTE,12);
+            cd.set(Calendar.HOUR_OF_DAY,19);
+            cd.set(Calendar.MINUTE,58);
             cd.set(Calendar.SECOND,0);
             Intent intent=new Intent(getApplicationContext(),notificationReciever.class);
             PendingIntent pi=PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);

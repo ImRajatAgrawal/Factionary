@@ -24,10 +24,11 @@ public class BookmarkActivity extends AppCompatActivity {
         lv=findViewById(R.id.bookmarklist);
         bookmarks=new ArrayList<>();
         bookmarkids=new ArrayList<>();
-        adp=new factDBAdapter(this);
+        adp=new factDBAdapter(getApplicationContext());
         adp.open();
         Cursor cr=adp.getfactfrombookmarks();
         while (cr.moveToNext()){
+            Log.i("i am here",cr.getCount()+"");
             String fact_content=cr.getString(cr.getColumnIndex("fact_content"));
             String category=cr.getString(cr.getColumnIndex("category"));
             int id=cr.getInt(cr.getColumnIndex("_id"));
@@ -38,6 +39,8 @@ public class BookmarkActivity extends AppCompatActivity {
 
         ad=new ArrayAdapter(this,android.R.layout.simple_list_item_1,bookmarks);
         lv.setAdapter(ad);
+        ad.notifyDataSetChanged();
+
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -52,6 +55,6 @@ public class BookmarkActivity extends AppCompatActivity {
                 return true;
             }
         });
-        ad.notifyDataSetChanged();
+
     }
 }
