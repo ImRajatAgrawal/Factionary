@@ -54,7 +54,6 @@ public class MyRecyclerListAdapter  extends RecyclerView.Adapter<MyRecyclerListA
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-       // public ImageView imageView;
         public ImageButton button;
         public TextView textView;
         public RelativeLayout relativeLayout;
